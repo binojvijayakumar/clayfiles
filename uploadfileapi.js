@@ -55,7 +55,7 @@ function getDocumentEntity(metaDataCollection, jurID, taxProcID, fileName) {
         "IsPublished": false,
         "IsOriginal": false,
         "MonitoredFolderID": -1,
-        "MetadataCollection": eval('[' + metaDataCollection + ']')
+        "MetadataCollection": metaDataCollection
     };
     return JSON.stringify(documentEntity);
 }
