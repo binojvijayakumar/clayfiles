@@ -25,7 +25,7 @@ function uploadFile(fileContent, fileName, metaData, metaDataCollection, jurID, 
     objXhr.open('POST', messagedata.uploadServiceAPIUrl, true);
     objXhr.onreadystatechange = function () {
         if (objXhr.readyState === XMLHttpRequest.DONE && objXhr.status === 200) {
-            if(successMessage) alert(successMessage);
+            if (successMessage) alert(successMessage);
         }
     };
     objXhr.withCredentials = true;
@@ -50,12 +50,12 @@ function getDocumentEntity(metaDataCollection, jurID, taxProcID, fileName) {
     var documentEntity = {
         "JurID": jurID, //"5",
         "TMPID": taxProcID, //"5",
-        "Name": fileName,//"corp_val.txt",
+        "Name": fileName, //"corp_val.txt",
         "IsEUC": false,
         "IsPublished": false,
         "IsOriginal": false,
         "MonitoredFolderID": -1,
-        "MetadataCollection":JSON.parse(JSON.stringify(metaDataCollection))
+        "MetadataCollection": eval('[' + metaDataCollection + ']')
     };
     return JSON.stringify(documentEntity);
 }
