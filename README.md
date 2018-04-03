@@ -1,0 +1,2 @@
+# clayfiles
+files-serve
