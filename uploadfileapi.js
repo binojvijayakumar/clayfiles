@@ -8,8 +8,8 @@ function uploadFile(fileContent, fileName, metaData, metaDataCollection, jurID, 
     var messagedata = getMessagedata(targetUrl, serverRelativeUrl, libraryName, libraryInternalName, loginUserName, uploadServiceAPIUrl);
 
     var data = new FormData();
-    data.append('uploadedFile', file);
-    data.append('newdocumentname', file.newdocumentname);
+    data.append('uploadedFile', file, fileName);
+    data.append('newdocumentname', fileName);
     data.append('metadata', metaData);
     data.append('documentEntity', documentEntity);
     data.append('targetUrl', messagedata.targetUrl);
@@ -34,29 +34,24 @@ function uploadFile(fileContent, fileName, metaData, metaDataCollection, jurID, 
     objXhr.send(data);
 }
 
-function getFile(fileContent, fileName) {
-    // var file = new File([fileContent], fileName, {
-    //     type: mime.getType(fileName)
-    // });
-    urltoFile(fileContent, fileName, mime.getType(fileName))
-        .then(function (file) {
-            file.newdocumentname = fileName;
-            return file;
-        });
-}
-
-//return a promise that resolves with a File instance
-function urltoFile(url, filename, mimeType) {
-    return (fetch(url)
-        .then(function (res) {
-            return res.arrayBuffer();
-        })
-        .then(function (buf) {
-            return new File([buf], filename, {
-                type: mimeType
-            });
-        })
-    );
+function getFile(dataURI, fileName) {
+    // convert base64 to raw binary data held in a string
+    // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
+    var byteString = atob(dataURI);
+    var mimeString = mime.getType(fileName)
+    // write the bytes of the string to an ArrayBuffer
+    var ab = new ArrayBuffer(byteString.length);
+    // create a view into the buffer
+    var ia = new Uint8Array(ab);
+    // set the bytes of the buffer to the correct values
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+    // write the ArrayBuffer to a blob, and you're done
+    var blob = new Blob([ab], {
+        type: mimeString
+    });
+    return blob;
 }
 
 function getDocumentEntity(metaDataCollection, jurID, taxProcID, fileName) {
