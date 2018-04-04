@@ -25,7 +25,7 @@ function uploadFile(fileContent, fileName, metaData, metaDataCollection, jurID, 
     objXhr.open('POST', messagedata.uploadServiceAPIUrl, true);
     objXhr.onreadystatechange = function () {
         if (objXhr.readyState === XMLHttpRequest.DONE && objXhr.status === 200) {
-            if (successCtrl) {
+            if (successCtrl && successCtrl.split('_').length == 3) {
                 textBoxChangeEvent(successCtrl, $('#' + successCtrl).attr('name'), 200, '', '');
             }
         }
