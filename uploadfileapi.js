@@ -23,11 +23,9 @@ function uploadFile(fileContent, fileName, metaData, metaDataCollection, jurID, 
     // data.append('mySiteFileName', '');
     var objXhr = new XMLHttpRequest();
     objXhr.open('POST', messagedata.uploadServiceAPIUrl, true);
-    objXhr.onreadystatechange = function () {
-        if (objXhr.readyState === XMLHttpRequest.DONE && objXhr.status === 200) {
-            if (successCtrl && successCtrl.split('_').length == 3) {
-                textBoxChangeEvent(successCtrl, $('#' + successCtrl).attr('name'), 200, '', '');
-            }
+    objXhr.onreadystatechange = function () {       
+        if (successCtrl && successCtrl.split('_').length == 3) {
+            textBoxChangeEvent(successCtrl, $('#' + successCtrl).attr('name'), objXhr.status, '', '');
         }
     };
     objXhr.withCredentials = true;
