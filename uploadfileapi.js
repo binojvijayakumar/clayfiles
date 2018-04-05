@@ -50,7 +50,7 @@ function getDocumentEntity(metaDataCollection, jurID, taxProcID, fileName) {
         "JurID": jurID, //"5",
         "TMPID": taxProcID, //"5",
         "Name": fileName, //"corp_val.txt",
-        "IsEUC": false,
+        "IsEUC": fileName.trim().match(/^(.*\.((xls|xlsx)$))[^.]*$/gi),
         "IsPublished": false,
         "IsOriginal": false,
         "MonitoredFolderID": -1,
