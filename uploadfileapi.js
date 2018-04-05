@@ -24,6 +24,7 @@ function uploadFile(fileContent, fileName, metaData, metaDataCollection, jurID, 
     objXhr.open('POST', messagedata.uploadServiceAPIUrl, true);
     objXhr.onreadystatechange = function () {
         if (statusCtrl && statusCtrl.split('_').length == 3 && objXhr.readyState === XMLHttpRequest.DONE) {
+            $('#' + statusCtrl).val(objXhr.status);
             textBoxChangeEvent(statusCtrl, $('#' + statusCtrl).attr('name'), objXhr.status, '', '');
         }
     };
