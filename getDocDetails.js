@@ -28,9 +28,7 @@ function getDocDetails(apiURL, contetntType, taxProcess, Jurisdiction, itemID, c
         },
         // beforeSend: function(xhr) {
         //     xhr.setRequestHeader("Authorization", getAuthCookie());
-        // },
-        // username: "taxcloud\\nithapaul",
-        // password: "virtual_2017",
+        // },      
 
         success: function (response) {
             $('#' + ctrlid).val(JSON.stringify(response));
