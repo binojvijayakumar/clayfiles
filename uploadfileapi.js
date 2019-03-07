@@ -36,16 +36,41 @@ function uploadFile(fileContent, fileName, metaData, metaDataCollection, jurID, 
 }
 
 function getFile(dataURI, fileName) {
-    var byteString = atob(dataURI);
+    // var byteString = atob(dataURI);
     var mimeString = mime.getType(fileName)
-    var ab = new ArrayBuffer(byteString.length);
-    var ia = new Uint8Array(ab);
-    for (var i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i);
+    // var ab = new ArrayBuffer(byteString.length);
+    // var ia = new Uint8Array(ab);
+    // for (var i = 0; i < byteString.length; i++) {
+    //     ia[i] = byteString.charCodeAt(i);
+    // }
+    // var blob = new Blob([ab], {
+    //     type: mimeString
+    // });
+    //return blob;
+    return b64toBlob(dataURI, mimeString);
+}
+
+function b64toBlob(b64Data, contentType, sliceSize) {
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+
+        var byteArray = new Uint8Array(byteNumbers);
+
+        byteArrays.push(byteArray);
     }
-    var blob = new Blob([ab], {
-        type: mimeString
-    });
+
+    var blob = new Blob(byteArrays, { type: contentType });
     return blob;
 }
 
